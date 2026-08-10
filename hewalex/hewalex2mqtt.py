@@ -185,6 +185,16 @@ def on_message_serial(obj, h, sh, m):
             topic = _Device_Pcwu_MqttTopic
     
         if sh["FNC"] == 0x50:
+            # TIJDELIJKE DEBUG: bij het config-registerblok (start rond 302)
+            # loggen we de ruwe bytes in hex, om de byte-uitlijning van
+            # TapWaterTemp/TapWaterHysteresis (reg 308/310) te verifieren.
+            # Deze blok mag je weer verwijderen zodra het uitgezocht is.
+            if 300 <= sh["RegStart"] <= 340:
+                from binascii import hexlify
+                logger.info(
+                    "DEBUG config-block RegStart=%s RegLen=%s bytes=%s",
+                    sh["RegStart"], sh["RegLen"], hexlify(sh["RestMessage"])
+                )
             mp = obj.parseRegisters(sh["RestMessage"], sh["RegStart"], sh["RegLen"])        
             for item in mp.items():
                 if isinstance(item[1], dict): # skipping dictionaries (time program) 
