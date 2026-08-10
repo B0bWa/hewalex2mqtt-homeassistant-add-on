@@ -203,12 +203,18 @@ def device_readregisters_enqueue():
     """Get device status every x seconds"""
     logger.info('Get device status')
     threading.Timer(get_status_interval, device_readregisters_enqueue).start()
-    if _Device_Zps_Enabled:        
-        readZPS()
-        readZPSConfig() 
-    if _Device_Pcwu_Enabled:        
-        readPCWU()
-        readPcwuConfig()
+    try:
+        if _Device_Zps_Enabled:
+            readZPS()
+            readZPSConfig()
+        if _Device_Pcwu_Enabled:
+            readPCWU()
+            readPcwuConfig()
+    except Exception as e:
+        # Eén mislukte cyclus (bijv. door een tijdelijke bus-storing) mag de
+        # thread niet laten crashen — de volgende cyclus is al ingepland
+        # (zie threading.Timer hierboven) en probeert het vanzelf opnieuw.
+        logger.warning('Uitlezen registers mislukt, wordt volgende cyclus (%ss) opnieuw geprobeerd: %s', get_status_interval, e)
 
 def readZPS():
     ser = serial.serial_for_url("socket://%s:%s" % (_Device_Zps_Address, _Device_Zps_Port))
