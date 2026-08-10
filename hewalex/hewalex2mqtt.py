@@ -194,7 +194,11 @@ def on_message_serial(obj, h, sh, m):
                 if key not in MessageCache or MessageCache[key] != val:
                     MessageCache[key] = val
                     logger.info(key + " " + val)
-                    client.publish(key, val)
+                    # retain=True: nieuwe abonnees (bijv. een net toegevoegde
+                    # HA-sensor) krijgen zo direct de laatst bekende waarde,
+                    # in plaats van te moeten wachten tot de waarde weer
+                    # verandert (dit script publiceert alleen bij wijziging).
+                    client.publish(key, val, retain=True)
 
     except Exception as e:
         logger.info('Exception in on_message_serial: '+ str(e))
