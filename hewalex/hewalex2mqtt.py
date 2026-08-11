@@ -197,10 +197,14 @@ def on_message_serial(obj, h, sh, m):
                 )
             mp = obj.parseRegisters(sh["RestMessage"], sh["RegStart"], sh["RegLen"])        
             for item in mp.items():
-                if isinstance(item[1], dict): # skipping dictionaries (time program) 
-                    continue
                 key = topic + '/' + str(item[0])
-                val = str(item[1])
+                if isinstance(item[1], dict):
+                    # Tijdprogramma (dict met uur 0-23 -> True/False):
+                    # als JSON publiceren i.p.v. overslaan, zodat het
+                    # tijdschema in Home Assistant te tonen/wijzigen is.
+                    val = json.dumps(item[1], separators=(',', ':'))
+                else:
+                    val = str(item[1])
                 if key not in MessageCache or MessageCache[key] != val:
                     MessageCache[key] = val
                     logger.info(key + " " + val)
