@@ -290,6 +290,27 @@ class BaseDevice:
         r = ser.read(1000)
         return self.processAllMessages(r)
 
+    def encodeTimeProgram(self, hours):
+        """hours: lijst/dict van 24 boolean-waarden (index 0-23, uur van de dag)
+        naar een 24-bit bitmask, opgesplitst in een laag en hoog 16-bit woord
+        (het register beslaat 2 opeenvolgende 16-bit registers = 32 bits,
+        waarvan alleen bit 0-23 betekenis hebben)."""
+        val = 0
+        for i in range(24):
+            on = hours[i] if isinstance(hours, list) else hours.get(str(i), hours.get(i, False))
+            if on:
+                val |= (1 << i)
+        low = val & 0xFFFF
+        high = (val >> 16) & 0xFFFF
+        return low, high
+
+    def writeTimeProgram(self, ser, regnum, hours):
+        """Schrijft een tijdprogramma weg over 2 opeenvolgende registers."""
+        low, high = self.encodeTimeProgram(hours)
+        r1 = self.writeRegister(ser, regnum, low)
+        r2 = self.writeRegister(ser, regnum + 2, high)
+        return r1 and r2
+
     def write(self, ser, registername, val):
         regnum = 0        
         # look for register based on name        
@@ -299,6 +320,12 @@ class BaseDevice:
                 break      
         reg = self.registers.get(regnum, None)
         if reg:
+            if reg['type'] == 'tprg':
+                # val is een JSON-string (lijst van 24 true/false-waarden)
+                # of al een geparste lijst/dict.
+                import json
+                hours = json.loads(val) if isinstance(val, str) else val
+                return self.writeTimeProgram(ser, regnum, hours)
             val = self.parseRegisterValue(reg, val)
             if val is not None:
                 #print('self.writeRegister(ser, ' + str(regnum) + ', '+ str(val) + ')')
