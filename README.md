@@ -1,5 +1,5 @@
 # home-assistant-add-on
-Home Assistant add-on for Hewalex2MQTT-EduardWitteveen, forked from 
+Home Assistant add-on for Hewalex2MQTT-EduardWitteveen, forked from https://github.com/RenevdBroek/hewalex2mqtt-homeassistant-add-on
 
 ### Hewalex2MQTT Home Assistant Add-on
 
