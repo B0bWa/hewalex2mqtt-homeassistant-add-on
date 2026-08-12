@@ -1,5 +1,5 @@
 # home-assistant-add-on
-Home Assistant add-on for Hewalex2MQTT-EduardWitteveen
+Home Assistant add-on for Hewalex2MQTT-EduardWitteveen, forked from 
 
 ### Hewalex2MQTT Home Assistant Add-on
 
@@ -25,13 +25,13 @@ The Hewalex2MQTT add-on for Home Assistant serves as a bridge between Hewalex he
 - **Increased Visibility**: Provides a clear and real-time view of the heat pump's operation, enhancing understanding and decision-making.
 - **Flexibility**: MQTT's open nature and wide acceptance allow for potential integrations with other smart home devices and platforms in the future.
 
-### Elfin-EW10 Installation Guide for Hewalex Devices
+### Elfin-EW11 Installation Guide for Hewalex Devices
 
 **Introduction:**
-The Elfin-EW10 device serves as a bridge between the RS485 connectors in Hewalex devices and your WiFi network, allowing the integration of Hewalex devices into smart home platforms like Home Assistant.
+The Elfin-EW11 device serves as a bridge between the RS485 connectors in Hewalex devices and your WiFi network, allowing the integration of Hewalex devices into smart home platforms like Home Assistant.
 
 **Materials Needed:**
-1. Elfin-EW10 (WiFi to RS485 device)
+1. Elfin-EW11 (WiFi to RS485 device)
 2. A 4-strand wire
 3. A screwdriver
 4. A device for measuring AC and ground (multimeter)
@@ -49,9 +49,10 @@ The Elfin-EW10 device serves as a bridge between the RS485 connectors in Hewalex
    
    b. **Connecting the Wire**:
    - Attach one end of the 4-strand wire to the RS485 connector using a screwdriver.
-   - Connect the other end of the wire to the Elfin-EW10 device, ensuring the proper alignment of wires. Refer to the manual or markings on the device to know which wire goes where.
+   - Connect the other end of the wire to the Elfin-EW11 device, ensuring the proper alignment of wires. Refer to the manual or markings on the device to know which wire goes where.
    - **Important**: Measure the AC and ground connections to ensure proper connectivity and avoid electrical issues.
-   
+   _N.B. it is also possible to connect the EW11 in parallel direct on the G-426 controller. The display has to be connected, otherwise it will not work, pump shuts off._
+
    c. **Heat Pump Controller Settings**:
    - Navigate to the RS485 settings in the heat pump controller, labeled "Port RS485".
    - Modify the settings as follows:
@@ -66,22 +67,22 @@ The Elfin-EW10 device serves as a bridge between the RS485 connectors in Hewalex
    - Find the RS485 port on the G-422 controller's backside.
    
    b. **Connection**:
-   - Connect the RS485 port directly to the Elfin-EW10 device.
+   - Connect the RS485 port directly to the Elfin-EW11 device.
 
-#### 4. **Configuring Elfin-EW10**:
+#### 4. **Configuring Elfin-EW11**:
 
    a. **Setup**:
    - Turn on the Elfin-EW10 device and connect it to your WiFi network.
    - Ensure the baud rate setting in the Elfin-EW10 matches the 38400 setting in the heat pump controller.
-   - Assign a static IP address to the Elfin-EW10. This ensures consistent communication without changing addresses.
+   - Assign a static IP address to the Elfin-EW11. This ensures consistent communication without changing addresses.
    
    b. **Integration with Home Assistant**:
-   - Once the Elfin-EW10 is set up and connected, you can configure the necessary MQTT parameters in Home Assistant based on the given configuration details.
-   - Ensure the MQTT settings in the Home Assistant and the Elfin-EW10 device are synchronized for smooth data flow.
+   - Once the Elfin-EW11 is set up and connected, you can configure the necessary MQTT parameters in Home Assistant based on the given configuration details.
+   - Ensure the MQTT settings in the Home Assistant and the Elfin-EW11 device are synchronized for smooth data flow.
 
 
 **Note**: Always follow safety protocols when working with electrical devices. Ensure that the devices are turned off when making connections and that you're cautious about handling wires and connectors.
-The description provided is a general guide based on the information given and may require further modifications based on specific scenarios, Elfin-EW10 device versions, or any updated instructions from the manufacturer.
+The description provided is a general guide based on the information given and may require further modifications based on specific scenarios, Elfin-EW11 device versions, or any updated instructions from the manufacturer.
 
 ### Step-by-Step Guide to Configure Home Assistant for Hewalex2MQTT
 
@@ -95,7 +96,7 @@ The description provided is a general guide based on the information given and m
 3. **Add Repository**:
    - In the "Add-on winkel" (Dutch for "Add-on store"), look for the three dots (ellipsis) in the upper right corner and click on them.
    - From the dropdown, select `Repositories`.
-   - Here you will see an option to add a new repository. Paste the link: `https://github.com/EduardWitteveen/hewalex2mqtt-homeassistant-add-on` into the given space and confirm to add this repository.
+   - Here you will see an option to add a new repository. Paste the link: `(https://github.com/B0bWa/hewalex2mqtt-homeassistant-add-on` into the given space and confirm to add this repository.
 
 4. **Check for Updates**:
    - Once the repository is added, again click on the three dots in the "Add-on winkel".
@@ -108,7 +109,7 @@ The description provided is a general guide based on the information given and m
    - Here, you will likely find an `Install` button. Click it to install the Hewalex2MQTT add-on.
    
 6. **Configuration**:
-   - After installation, there might be configuration options specific to the add-on where you might have to provide details related to the Elfin-EW10 device, your MQTT broker, or other settings.
+   - After installation, there might be configuration options specific to the add-on where you might have to provide details related to the Elfin-EW11 device, your MQTT broker, or other settings.
    - Ensure that you fill out any necessary fields and save the configuration.
 
 7. **Start the Add-on**:
@@ -116,5 +117,6 @@ The description provided is a general guide based on the information given and m
 
 8. **Monitor & Control**:
    - With the add-on running, Home Assistant should now be able to communicate with the heat pump via MQTT. You can set up entities, sensors, or other integrations based on the data being provided by the add-on.
+   - A dashboard example is given in this repository.
 
 Remember to periodically check for updates to the add-on to ensure you have the latest features and security patches. As always, before making any changes, it's a good idea to have backups of your Home Assistant configuration to easily recover in case of any unforeseen issues.
