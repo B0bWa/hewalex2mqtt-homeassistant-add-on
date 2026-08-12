@@ -1,0 +1,67 @@
+title: Hewalex
+  - title: Hewalex Boiler
+    path: hewalex-boiler
+    icon: mdi:water-boiler
+    cards:
+      - type: entities
+        title: Status
+        entities:
+          - entity: switch.warmtepomp_ingeschakeld
+            name: Ingeschakeld
+          - entity: binary_sensor.warmtepomp_in_bedrijf
+            name: In bedrijf
+          - entity: binary_sensor.warmtepomp_compressor
+            name: Compressor
+          - entity: binary_sensor.warmtepomp_ventilator
+            name: Ventilator
+          - entity: binary_sensor.warmtepomp_circulatiepomp
+            name: Circulatiepomp
+          - entity: binary_sensor.warmtepomp_verwarmingselement
+            name: Verwarmingselement (back-up)
+          - entity: sensor.warmtepomp_wachtstatus
+            name: Wachtstatus
+      - type: grid
+        title: Temperaturen
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.warmtepomp_t1_omgevingstemp
+            name: T1 Omgeving
+            min: -20
+            max: 40
+          - type: gauge
+            entity: sensor.warmtepomp_t2_tank_onder
+            name: T2 Tank onder
+            min: 0
+            max: 70
+          - type: gauge
+            entity: sensor.warmtepomp_t3_tank_boven
+            name: T3 Tank boven
+            min: 0
+            max: 70
+          - type: gauge
+            entity: sensor.warmtepomp_t7_water_uitlaat
+            name: T7 Water uit
+            min: 0
+            max: 60
+      - type: entities
+        title: Temperaturen (detail)
+        entities:
+          - sensor.warmtepomp_t1_omgevingstemp
+          - sensor.warmtepomp_t2_tank_onder
+          - sensor.warmtepomp_t3_tank_boven
+          - sensor.warmtepomp_t6_water_inlaat
+          - sensor.warmtepomp_t7_water_uitlaat
+          - sensor.warmtepomp_t8_verdamper
+          - sensor.warmtepomp_t9_voor_compressor
+          - sensor.warmtepomp_t10_na_compressor
+      - type: history-graph
+        entities:
+          - entity: sensor.warmtepomp_t2_tank_onder
+          - entity: sensor.warmtepomp_t3_tank_boven
+          - entity: sensor.warmtepomp_t7_water_uitlaat
+          - entity: sensor.warmtepomp_t6_water_inlaat
+        title: Temperatuurverloop
+        hours_to_show: 24
+
